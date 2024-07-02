@@ -37,6 +37,8 @@ export default function NewPost({onTextChange, onNameChange}) {
                 onChange={onTextChange}
             />
         </p>
+
+        <button className="bg-white w-28 h-8 rounded-2xl mt-16 ml-20">Submit</button>
     </form>
   )
 }
