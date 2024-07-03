@@ -1,20 +1,16 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
+import { useState } from "react"
 import NewPost from "./NewPost"
 import TextCard from "./textCard"
 import Modal from "./Modal";
-import { useState } from "react"
 
 function ListCard({isPosting, onStopPosting}) {
-    const [nameHandler, setNameHandler] = useState('');
-    const [textHandler, setTextHandler] = useState('');
 
-    function changeNameHandler (event) {
-        setNameHandler(event.target.value)
-    }
+    const [posts, setPosts] = useState([]);
 
-    function changeTextHandler (event) {
-        setTextHandler(event.target.value)
+    function addPostHandler(postData){
+        setPosts((existingPost) => [postData, ...existingPost]);
     }
 
   return (
@@ -22,13 +18,15 @@ function ListCard({isPosting, onStopPosting}) {
         {isPosting && (
             <Modal onClose={onStopPosting}>
                 <NewPost 
-                    onNameChange={changeNameHandler} 
-                    onTextChange={changeTextHandler}
+                    onCancel={onStopPosting}
+                    onAddPost={addPostHandler}
                 /> 
             </Modal>
         )}
         <ul className='grid grid-cols-3'>
-            <TextCard author={nameHandler} body={textHandler}/>
+            {posts.map((post) => (
+                <TextCard key={post} author={post.author} body={post.body}/>
+            ))}
         </ul>
     </div>
   )

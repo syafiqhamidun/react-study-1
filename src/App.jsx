@@ -5,7 +5,7 @@ import ListCard from "./component/ListCard"
 
 function App() {
 
-  const [modalIsVisible, setModalIsVisible] = useState(true);
+  const [modalIsVisible, setModalIsVisible] = useState(false);
   
   function hideModalHandler(){
     setModalIsVisible(false)
