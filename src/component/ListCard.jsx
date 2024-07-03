@@ -1,18 +1,13 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-undef */
 import NewPost from "./NewPost"
 import TextCard from "./textCard"
 import Modal from "./Modal";
 import { useState } from "react"
 
-
-function ListCard() {
-
-    const [modalIsVisible, setModalIsVisible] = useState(true);
+function ListCard({isPosting, onStopPosting}) {
     const [nameHandler, setNameHandler] = useState('');
     const [textHandler, setTextHandler] = useState('');
-
-    function hideModalHandler () {
-        setModalIsVisible(false);
-    }
 
     function changeNameHandler (event) {
         setNameHandler(event.target.value)
@@ -24,8 +19,8 @@ function ListCard() {
 
   return (
     <div>
-        {modalIsVisible && (
-            <Modal onClose={hideModalHandler}>
+        {isPosting && (
+            <Modal onClose={onStopPosting}>
                 <NewPost 
                     onNameChange={changeNameHandler} 
                     onTextChange={changeTextHandler}
