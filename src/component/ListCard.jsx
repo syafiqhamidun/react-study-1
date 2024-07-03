@@ -23,11 +23,21 @@ function ListCard({isPosting, onStopPosting}) {
                 /> 
             </Modal>
         )}
+        {posts.length > 0 && (
         <ul className='grid grid-cols-3'>
             {posts.map((post) => (
                 <TextCard key={post} author={post.author} body={post.body}/>
             ))}
         </ul>
+        )}
+        {posts.length === 0 && (
+        <div className="flex justify-center items-center h-screen">
+            <h1 className="text-center text-gray-600 text-xl font-semibold">
+                There are no Posts
+            </h1>
+        </div>
+        )}
+
     </div>
   )
 }
