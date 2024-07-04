@@ -7,19 +7,16 @@ import TextCard from "./textCard"
 import Modal from "./Modal";
 
 function ListCard({isPosting, onStopPosting}) {
-    // fetch('http://localhost:8080/posts')
-    //     .then(response => response.json()) // The line takes this Response object and calls its .json() method, which parses the response body as JSON. This returns another Promise that resolves to the parsed JSON data.
-    //     .then(data => {
-    //         setPosts(data.posts) // updates the local state with the posts received from the server. data.posts refers to the array of posts within the JSON response.
-    //     })
 
     const [posts, setPosts] = useState([]);
+    const [isFetching, setIsFetching] = useState(false);
 
     useEffect(() => {
         async function fetchPosts() {
             const response = await fetch('http://localhost:8080/posts');
             const resData = await response.json();
-            setPosts(resData.posts)
+            setPosts(resData.posts);
+            setIsFetching(true);
         }
 
         fetchPosts();
@@ -46,19 +43,24 @@ function ListCard({isPosting, onStopPosting}) {
                 /> 
             </Modal>
         )}
-        {posts.length > 0 && (
+        { isFetching && posts.length > 0 && (
         <ul className='grid grid-cols-3'>
             {posts.map((post) => (
                 <TextCard key={post} author={post.author} body={post.body}/>
             ))}
         </ul>
         )}
-        {posts.length === 0 && (
+        { isFetching && posts.length === 0 && (
         <div className="flex justify-center items-center h-screen">
             <h1 className="text-center text-gray-600 text-xl font-semibold">
                 There are no Posts
             </h1>
         </div>
+        )}
+        {!isFetching && (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-center text-gray-600 text-xl font-semibold">Loading Post ...</p>
+            </div>
         )}
 
     </div>
