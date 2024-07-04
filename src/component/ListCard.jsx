@@ -9,8 +9,15 @@ function ListCard({isPosting, onStopPosting}) {
 
     const [posts, setPosts] = useState([]);
 
-    function addPostHandler(postData){
-        setPosts((existingPost) => [postData, ...existingPost]);
+    function addPostHandler(postData){ //This line defines a function named addPostHandler which takes one parameter, postData. This parameter represents the data for the new post that needs to be added.
+        fetch('http://localhost:8080/posts' , {   //fetch data from local dummy server 
+            method: 'POST', //Specifies that the request method is POST, which is typically used for sending data to create a new resource.
+            body: JSON.stringify(postData), //Converts the postData object into a JSON string, which is the format required for sending data in a POST request.
+            headers: {
+                'Content-Type' : 'application/json' //This sets the Content-Type header to application/json, indicating that the body of the request is in JSON format.
+            }
+        });
+        setPosts((existingPost) => [postData, ...existingPost]); //
     }
 
   return (
